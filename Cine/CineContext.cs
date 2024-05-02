@@ -15,6 +15,8 @@ namespace Cine
         public DbSet<BookingEntity> Bookings { get; set; }
         public DbSet<BillboardEntity> Billboards { get;  set; }
         public DbSet<MovieEntity> Movies { get; set; }
+        public object Carteleras { get; set; }
+        public IEnumerable<object> Reservas { get; set; }
 
         public object GetBookingsForHorrorMoviesWithinDateRange(DateTime startDate, DateTime endDate)
         {

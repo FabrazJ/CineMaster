@@ -1,4 +1,5 @@
 ﻿using Cine;
+using CineMaster.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,12 +16,26 @@ namespace CineMaster.Controllers
             _context = context;
         }
 
+        private readonly ICarteleraService _carteleraService;
+
+        public CarteleraController(ICarteleraService carteleraService)
+        {
+            _carteleraService = carteleraService;
+        }
+
+
         // Obtener todas las funciones de la cartelera
         [HttpGet]
         public async Task<IActionResult> GetAllBillboards()
         {
             var billboards = await _context.Billboards.ToListAsync();
             return Ok(billboards);
+        }
+
+        public async Task<IActionResult> ObtenerButacasPorSalaEnCarteleraDelDiaActual()
+        {
+            var butacasPorSala = await _carteleraService.ObtenerButacasPorSalaEnCarteleraDelDiaActual();
+            return Ok(butacasPorSala);
         }
 
         // Obtener una función de la cartelera por su ID
@@ -81,21 +96,42 @@ namespace CineMaster.Controllers
         }
 
         // Eliminar una función de la cartelera
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBillboard(int id)
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteBillboard(int id)
+        //{
+        //    var billboard = await _context.Billboards.FindAsync(id);
+        //    if (billboard == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _context.Billboards.Remove(billboard);
+        //    await _context.SaveChangesAsync();
+
+        //    return NoContent();
+        //}
+
+        private readonly ICarteleraService _carteleraService;
+
+        public CarteleraController(ICarteleraService carteleraService)
         {
-            var billboard = await _context.Billboards.FindAsync(id);
-            if (billboard == null)
-            {
-                return NotFound();
-            }
-
-            _context.Billboards.Remove(billboard);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            _carteleraService = carteleraService;
         }
 
+        [HttpDelete("{carteleraId}")]
+        public async Task<IActionResult> CancelarCartelera(int carteleraId)
+        {
+            var result = await _carteleraService.CancelarCartelera(carteleraId);
+
+            if (result)
+            {
+                return Ok("Cartelera cancelada exitosamente.");
+            }
+            else
+            {
+                return NotFound("No se encontró la cartelera especificada.");
+            }
+        }
         private bool BillboardExists(int id)
         {
             return _context.Billboards.Any(e => e.Id == id);
