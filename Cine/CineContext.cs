@@ -1,16 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 namespace Cine
 {
     public class CineContext : DbContext
     {
-      public CineContext(DbContextOptions<CineContext> options)
-        :base(options)
+        public CineContext(DbContextOptions<CineContext> options)
+            : base(options)
         {
-        
+
         }
 
-        public object Bookings { get; set; }
-        public object Billboards { get; set; }
-        public object Movies { get; set; }
+        public DbSet<BookingEntity> Bookings { get; set; }
+        public DbSet<BillboardEntity> Billboards { get; set; }
+        public DbSet<MovieEntity> Movies { get; set; }
+
+        public object GetBookingsForHorrorMoviesWithinDateRange(DateTime startDate, DateTime endDate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
