@@ -35,7 +35,7 @@ namespace Cine
         public RoomEntity Room { get; set; }
 
         public ICollection<SeatEntity> Seats { get; set; }
-
+        public object Bookings { get; set; }
     }
 
     public class BookingEntity : BaseEntity
