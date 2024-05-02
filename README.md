@@ -1,7 +1,16 @@
 # CineMaster
 El proyecto está creado por los siguientes literales
+
+ASP.NET V6.0 
+ENTITY FRAMEWORK V6.0
+HERRAMIENTAS 
+SQL SERVER MANAGEMENT STUDIO
+MICROSOFT ENTITY FRAMEWORK SQL SERVER
+MICROSOFT ENTITY FRAMEWORK TOOLS
+
+
 1. Desde .Net a ORM
-(No fue nada fácil, al comienzo pensaba que sí, por lo que opté hacer dos partes, una Clase de Libreria, para implementarla en ASP.NET y ahí partir)
+(No fue nada fácil, al comienzo pensaba que sí, por lo que opté hacer dos partes, una Clase de Libreria, para implementarla en ASP.NET y ahí parti.)
 
 3. Los Querys necesarios para la implementación.
 Tomando en cuenta que el backend está más enfocado a que funcione bien, la parte del Front, es un diseño para ver el final de como sería.
