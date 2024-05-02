@@ -19,7 +19,9 @@ namespace CineMaster.Controllers
         [HttpGet]
         public IActionResult GetBookingsForHorrorMoviesWithinDateRange(DateTime startDate, DateTime endDate)
         {
-            var bookings = _context.GetBookingsForHorrorMoviesWithinDateRange(startDate, endDate)
+            var bookings = _context.Bookings
+                .Where(b => b.Billboard.Movie.Genre == MovieGenreEnum.HORROR &&
+                            b.Billboard.Date >= startDate && b.Billboard.Date <= endDate)
                 .ToList();
             return Ok(bookings);
         }
