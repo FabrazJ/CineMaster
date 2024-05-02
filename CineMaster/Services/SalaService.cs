@@ -32,8 +32,14 @@ public async Task<List<CancellationResultDto>> CancelarCarteleraYReservas(DTOBil
             // Lista para almacenar los clientes afectados
             List<CancellationResultDto> affectedClients = new List<CancellationResultDto>();
 
-            // Cancelar reservas asociadas
-            foreach (var booking in billboard.Bookings)
+                    // Verificar si la fecha de la cartelera es anterior a la fecha actual
+                    if (billboard.Date < DateTime.Now)
+                    {
+                        throw new InvalidOperationException("No se puede cancelar funciones de la cartelera con fecha anterior a la actual");
+                    }
+
+                    // Cancelar reservas asociadas
+                    foreach (var booking in billboard.Bookings)
             {
                 // Habilitar la butaca correspondiente
                 var seat = await _context.Seats.FirstOrDefaultAsync(s => s.Id == booking.SeatId);
