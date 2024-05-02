@@ -3,6 +3,8 @@ using CineMaster.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic; 
+
 
 namespace CineMaster.Services
 {
@@ -14,19 +16,18 @@ namespace CineMaster.Services
         {
             _context = context;
         }
-
 public async Task<List<CancellationResultDto>> CancelarCarteleraYReservas(DTOBillboardsCancellation cancellationDto)
 {
     using var transaction = _context.Database.BeginTransaction();
 
     try
     {
-        // Obtener la cartelera a cancelar
-        var billboard = await _context.Billboards
-            .Include(b => b.Bookings)
-            .FirstOrDefaultAsync(b => b.Id == cancellationDto.BillboardId);
+         var billboard = await _context.Billboards
+              .Include(b => b.Bookings) // Carga las reservas junto con la cartelera
+              .FirstOrDefaultAsync(b => b.Id == cancellationDto.BillboardId);
 
-        if (billboard != null)
+
+                if (billboard != null)
         {
             // Lista para almacenar los clientes afectados
             List<CancellationResultDto> affectedClients = new List<CancellationResultDto>();
@@ -59,7 +60,7 @@ public async Task<List<CancellationResultDto>> CancelarCarteleraYReservas(DTOBil
             await transaction.CommitAsync();
 
             // Imprimir la lista de clientes afectados por consola
-            foreach (var client in affectedClients)
+            foreach (CancellationResultDto client in affectedClients)
             {
                 Console.WriteLine($"Cliente ID: {client.ClientId}, Nombre: {client.ClientName}");
             }
@@ -79,8 +80,7 @@ public async Task<List<CancellationResultDto>> CancelarCarteleraYReservas(DTOBil
         await transaction.RollbackAsync();
         throw ex;
     }
-        }
-
+}
         public async Task<bool> InhabilitarButacaYCancelarReserva(DTOBooking bookingDto, SeatDto seatDto)
         {
             using var transaction = _context.Database.BeginTransaction();

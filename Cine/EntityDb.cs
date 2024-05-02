@@ -44,15 +44,33 @@ namespace Cine
                 .WithMany()
                 .HasForeignKey(b => b.MovieId);
 
+
             modelBuilder.Entity<BillboardEntity>()
                 .HasOne(b => b.Room)
                 .WithMany()
                 .HasForeignKey(b => b.RoomId);
 
+            modelBuilder.Entity<BillboardEntity>()
+                .HasMany(b => b.Bookings) // Indica que una cartelera puede tener muchas reservas
+                .WithOne(b => b.Billboard) // Indica que una reserva pertenece a una sola cartelera
+                .HasForeignKey(b => b.BillboardId);
+
             modelBuilder.Entity<SeatEntity>()
                 .HasOne(s => s.Room)
                 .WithMany()
                 .HasForeignKey(s => s.RoomId);
+
+       
+
+            modelBuilder.Entity<RoomEntity>()
+                .HasMany(r => r.Billboards)
+                .WithOne(b => b.Room)
+                .HasForeignKey(b => b.RoomId);
+
+            modelBuilder.Entity<SeatEntity>()
+                .HasMany(s => s.Bookings)
+                .WithOne(b => b.Seat)
+                .HasForeignKey(b => b.SeatId);
 
             base.OnModelCreating(modelBuilder);
         }
