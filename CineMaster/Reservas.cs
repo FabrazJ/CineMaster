@@ -12,8 +12,6 @@ namespace CineMaster
         public DbSet<BillboardEntity> Billboards { get; set; }
         public DbSet<MovieEntity> Movies { get; set; }
 
-        // Otros DbSets y métodos de configuración...
-
         public IQueryable<BookingEntity> GetBookingsForHorrorMoviesWithinDateRange(DateTime startDate, DateTime endDate)
         {
             return Bookings

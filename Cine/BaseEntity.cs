@@ -33,6 +33,9 @@ namespace Cine
         [ForeignKey("Room")]
         public int RoomId { get; set; }
         public RoomEntity Room { get; set; }
+
+        public ICollection<SeatEntity> Seats { get; set; }
+
     }
 
     public class BookingEntity : BaseEntity
@@ -95,6 +98,18 @@ namespace Cine
         public short LengthMinutes { get; set; }
     }
 
+    //public class RoomEntity : BaseEntity
+    // {
+    //   [Required]
+    //  [MaxLength(50)]
+    // public string Name { get; set; }
+
+    //        [Required]
+    //      public short Number { get; set; }
+    //    public object Billboards { get; set; }
+
+    //    }
+
     public class RoomEntity : BaseEntity
     {
         [Required]
@@ -103,6 +118,9 @@ namespace Cine
 
         [Required]
         public short Number { get; set; }
+
+        // Define la relación con BillboardEntity como una colección
+        public ICollection<BillboardEntity> Billboards { get; set; }
     }
 
     public class SeatEntity : BaseEntity
@@ -116,5 +134,8 @@ namespace Cine
         [ForeignKey("Room")]
         public int RoomId { get; set; }
         public RoomEntity Room { get; set; }
+
+        public ICollection<BookingEntity> Bookings { get; set; }
+
     }
 }
