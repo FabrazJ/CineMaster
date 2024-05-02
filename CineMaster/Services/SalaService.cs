@@ -86,6 +86,8 @@ public async Task<List<CancellationResultDto>> CancelarCarteleraYReservas(DTOBil
         await transaction.RollbackAsync();
         throw ex;
     }
+
+            throw new NotImplementedException();
 }
         public async Task<bool> InhabilitarButacaYCancelarReserva(DTOBooking bookingDto, SeatDto seatDto)
         {
@@ -127,5 +129,8 @@ public async Task<List<CancellationResultDto>> CancelarCarteleraYReservas(DTOBil
                 throw;
             }
         }
+
     }
+
+
 }
